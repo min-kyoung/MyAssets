@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A905410D27A57B8300630DA5 /* PageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A905410C27A57B8300630DA5 /* PageControl.swift */; };
+		A905410F27A57DF900630DA5 /* AssetBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A905410E27A57DF900630DA5 /* AssetBannerView.swift */; };
 		A915B08827A2925D00817A94 /* MyAssetsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A915B08727A2925D00817A94 /* MyAssetsApp.swift */; };
 		A915B08A27A2925D00817A94 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A915B08927A2925D00817A94 /* ContentView.swift */; };
 		A915B08C27A2926000817A94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A915B08B27A2926000817A94 /* Assets.xcassets */; };
@@ -22,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A905410C27A57B8300630DA5 /* PageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControl.swift; sourceTree = "<group>"; };
+		A905410E27A57DF900630DA5 /* AssetBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetBannerView.swift; sourceTree = "<group>"; };
 		A915B08427A2925D00817A94 /* MyAssets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyAssets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A915B08727A2925D00817A94 /* MyAssetsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAssetsApp.swift; sourceTree = "<group>"; };
 		A915B08927A2925D00817A94 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -49,6 +53,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A905411027A57E0900630DA5 /* AssetBanner */ = {
+			isa = PBXGroup;
+			children = (
+				A94F9C1427A554770053BD7C /* BannerCard.swift */,
+				A94F9C1727A555B40053BD7C /* PageViewController.swift */,
+				A905410C27A57B8300630DA5 /* PageControl.swift */,
+				A905410E27A57DF900630DA5 /* AssetBannerView.swift */,
+			);
+			path = AssetBanner;
+			sourceTree = "<group>";
+		};
 		A915B07B27A2925D00817A94 = {
 			isa = PBXGroup;
 			children = (
@@ -73,8 +88,7 @@
 				A915B08927A2925D00817A94 /* ContentView.swift */,
 				A966D06027A319D3004B6E03 /* AssetView.swift */,
 				A966D05827A30BCC004B6E03 /* NavigationBarWithButton.swift */,
-				A94F9C1427A554770053BD7C /* BannerCard.swift */,
-				A94F9C1727A555B40053BD7C /* PageViewController.swift */,
+				A905411027A57E0900630DA5 /* AssetBanner */,
 				A94F9C1627A5548B0053BD7C /* AssetMenu */,
 				A94F9C1327A5542C0053BD7C /* Entities */,
 				A915B08B27A2926000817A94 /* Assets.xcassets */,
@@ -187,6 +201,8 @@
 				A915B08A27A2925D00817A94 /* ContentView.swift in Sources */,
 				A915B08827A2925D00817A94 /* MyAssetsApp.swift in Sources */,
 				A966D05B27A3123A004B6E03 /* AssetMenu.swift in Sources */,
+				A905410D27A57B8300630DA5 /* PageControl.swift in Sources */,
+				A905410F27A57DF900630DA5 /* AssetBannerView.swift in Sources */,
 				A94F9C1527A554770053BD7C /* BannerCard.swift in Sources */,
 				A966D05D27A3145C004B6E03 /* AssetMenuButtonStyle.swift in Sources */,
 			);
