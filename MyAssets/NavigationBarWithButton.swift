@@ -19,7 +19,8 @@ struct NavigationBarWithButton: ViewModifier {
                 trailing: Button(
                     action: {
                         print("자산 추가 버튼 tapped")
-                    }, label: {
+                    },
+                    label: {
                         Image(systemName: "plus")
                         Text("자산추가")
                             .font(.system(size: 12))
@@ -37,7 +38,7 @@ struct NavigationBarWithButton: ViewModifier {
                 // navigationbar의 appearance를 조정하려면 UIKit의 정보를 활용
                 let appearance = UINavigationBarAppearance()
                 appearance.configureWithTransparentBackground()
-                appearance.backgroundColor = UIColor(white: 1, alpha: 0.5)
+                appearance.backgroundColor = UIColor(white: 1, alpha: 0.6)
                 UINavigationBar.appearance().standardAppearance = appearance
                 UINavigationBar.appearance().compactAppearance = appearance // 조금 줄어들었을 때
                 UINavigationBar.appearance().scrollEdgeAppearance = appearance
