@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+// PageViewController와 PageControl을 전체적으로 View로 감싸줌
 struct AssetBannerView: View {
     let bannerList: [AssetBanner] = [
         AssetBanner(title: "공지사항", description: "추가된 공지사항을 확인하세요.", backgroundColor: .red),
@@ -18,7 +18,7 @@ struct AssetBannerView: View {
     
     var body: some View {
         let bannerCards = bannerList.map {
-            BannerCard(bannner: $0) }
+            BannerCard(bannner: $0) } // bannerList를 가져와서 BannerCard를 가짐
         
         ZStack(alignment: .bottomTrailing) {
             PageViewController(pages: bannerCards, currentPage: $currentPage)

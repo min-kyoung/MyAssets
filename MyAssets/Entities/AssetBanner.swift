@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+// Banner entity
 struct AssetBanner {
     let title: String
     let description: String

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// BannerCard를 하나의 View로 만듦
 struct BannerCard: View {
     var bannner: AssetBanner
     
