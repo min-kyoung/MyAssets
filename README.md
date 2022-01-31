@@ -12,6 +12,11 @@ SwiftUI를 이용하여 자산관리 어플 샘플을 만드는 프로젝트이�
 >ContentView
  * 앱 하단의 탭 바 구성
 >NavigationBarWithButton
- * 앱 상단의 네비게이션 버트 구성
+ * 앱 상단의 네비게이션 버튼 구성
 >AssetView
  * 앱을 실행하면 보여질 메인 화면
+>AssetSummaryView
+ >>AssetSummaryData
+ >>AssetSectionHeader
+ >>AssetSectionView
+ >>AssetSummaryView
