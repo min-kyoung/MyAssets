@@ -11,10 +11,56 @@ SwiftUI를 이용하여 자산관리 어플 샘플을 만드는 프로젝트이�
 ## Files
 >ContentView
  * 앱 하단의 탭 바를 구성한다.
+   ```swift
+   struct ContentView: View {
+       // 하단에 탭 바가 있는 TabView를 표현
+       @State private var selection: Tab = .asset
+
+       // 먼저 선택된 탭이 항상 존재할 것이므로, 첫번째 탭으로 표현할 수 있도록 enum을 생성
+       enum Tab {
+           case asset
+           case recommend
+           case alert
+           case setting
+       }
+   ```
 >NavigationBarWithButton
  * 앱 상단의 네비게이션 버튼을 구성한다.
+ * ViewModifier는 후에 view에 바로 이 버튼을 함수처럼 적용해서 이 ViewModifier가 표현하고 있는 내용을 그대로 적용할 수 있다.
+   ```swift
+   struct NavigationBarWithButton: ViewModifier { ... }
+   ```
+ * Modifier를 한 경우 preview를 볼 때 버튼에 바로 실행하는 것이 아니라 SwiftUI에서 제공하는 이 뷰에 위의 modifier를 바로 적용할 수 있다.
+   ```swift
+   struct NavigationBarWithButton_Previews: PreviewProvider {
+       static var previews: some View {
+           NavigationView {
+               Color.gray.edgesIgnoringSafeArea(.all)
+                   .navigationBarWithButtonStyle("내 자산")
+           }
+       }
+   }
+   ```
 >AssetView 
  * 앱을 실행하면 보여질 메인 화면
+ * stack이나 grid의 경우 스크롤을 포함하고 있지 않다. <br>
+   따라서 스크롤 했을 때 자연스럽게 뷰가 내려가게 하려면 스크롤 뷰 안에 stack이나 gird를 넣어주어야 컨테이너 밖에 있는 데이터도 자연스럽게 표현 된다.
+   ```swift
+   NavigationView {
+       ScrollView {
+            VStack(spacing: 30) {
+                Spacer()
+                AssetMenuGridView()
+                AssetBannerView()
+                    .aspectRatio(5/2, contentMode: .fit)
+                AssetSummaryView()
+                    .environmentObject(AssetSummaryData())
+            }
+        }
+        .background(Color.gray.opacity(0.2))
+        .navigationBarWithButtonStyle("내 자산")
+   }
+   ```
 #### AssetSummaryView
 >AssetSummaryData
  * 데이터 모델을 생성한다.
@@ -96,8 +142,56 @@ SwiftUI를 이용하여 자산관리 어플 샘플을 만드는 프로젝트이�
  * BannerCard를 하나의 View로 만든다.
 >PageViewController
  * UIKit에 있는 PageViewController 활용하여 페이지 스크롤링 기능을 추가한다. 
+ * 구조체 PageViewController는 page 역할을 하는 view를 받으며, UIKit에서 제공하는 UIViewControllerRepresentable로 설정한다.
+   ```swift
+   struct PageViewController<Page: View>: UIViewControllerRepresentable {
+      var pages: [Page]
+
+      @Binding var currentPage: Int  // Binding이라는 property wrapper를 이용해서 현재 어떤 페이지가 보여지고 있는지 확인
+
+      // 프로토콜 준수사항 1
+      func makeCoordinator() -> Coordinator { ... }
+      
+      // 프로토콜 준수사항 2
+      func makeUIViewController(context: Context) -> UIPageViewController { ... }
+      
+      // 프로토콜 준수사항 3
+      func updateUIViewController(_ pageViewController: UIPageViewController, context: Context) { ... }
+    ```
+ * UIKit의 특성인 DataSource와 Delegate를 받을 수 있도록 별도의 Coordinator라고 부르는 조정자를 추가하며, 이 안에서 사용할 DataSource와 Delegate를 구현한다.
+    ```swift
+    class Coordinator: NSObject, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+        var parent: PageViewController
+        var controllers = [UIViewController] ()
+       
+        init(_ pageViewController: PageViewController) {
+            parent = pageViewController
+            controllers = parent.pages.map { UIHostingController(rootView: $0)} // UIHostingController로 감싸줌
+        }
+        
+        // index가 0이라면 컨트롤러의 마지막을 보여줌
+        func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? { ... }
+         
+        // 마지막 카운트에 도달했다면 첫번째 컨트롤러를 보여줌
+        func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? { ... }
+    ```
 >PageControl
- * 각각의 PageController 안에 들어갈 해당 뷰에 대한 Representable을 설정한다.
+ * 각각의 PageController 안에 들어갈 해당 뷰를 Representable로 설정한다.
+   ```swift
+   struct PageControl: UIViewRepresentable {
+       var numberOfPages: Int // 전체 페이지의 수
+       @Binding var currentPage: Int // 현재 페이지
+       
+       // 프로토콜 준수사항 1
+       func makeCoordinator() -> Coordinator { ... }
+
+       // 프로토콜 준수사항 2
+       func makeUIView(context: Context) -> UIPageControl { ... }
+
+       // 프로토콜 준수사항 3
+       func updateUIView(_ uiView: UIPageControl, context: Context) { ... }
+   }
+   ```
 >AssetBannerView
  * PageViewController와 PageControl을 전체적으로 View로 감싸준다.
    ```swift
@@ -113,3 +207,15 @@ SwiftUI를 이용하여 자산관리 어플 샘플을 만드는 프로젝트이�
        }
    }
    ```
+#### AssetMenu
+>AssetMenuButtonStyle
+ * 동일한 형태의 반복되는 버튼의 모양을 view로 만들어주는 대신에 SwiftUI에서 제공해주는 버튼 스타일을 customizing 해서 재사용 한다.
+>AssetMenuGridView
+ * 8가지 항목의 grid를 설정한다. 
+#### Entities
+>AssetMenu
+ * 8가지 항목 엔티티를 정의한다.
+>AssetBanner
+ * 배너 엔티티를 정의한다.
+>Asset
+ * assets.json에 있는 데이터를 디코딩해서 뿌려주기 위해 데이터 모델에 맞는 엔티티를 만든다.
